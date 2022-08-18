@@ -1,63 +1,43 @@
-package com.example.application.data.entity;
+package com.example.application.foundation.entity;
 
-import javax.persistence.Entity;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Email;
-import org.springframework.lang.Nullable;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-import com.example.application.data.AbstractEntity;
+import javax.persistence.*;
+import java.util.Objects;
+import java.util.UUID;
 
+@ToString
+@AllArgsConstructor
 @Entity
-public class Customer extends AbstractEntity {
+@Table(name = "TB_Customer")
+@NoArgsConstructor
+@Data
+@Builder
+public class Customer {
 
-    @NotEmpty
-    private String firstName = "";
-
-    @NotEmpty
-    private String lastName = "";
-
-    @Email
-    @NotEmpty
-    private String email = "";
-
-    @Nullable
-    private String company = "";
+    @Id
+    @GeneratedValue
+    private UUID id;
+    @Column(length = 20)
+    private String firstName;
+    @Column(length = 20)
+    private String lastName;
+    @Column(length = 30)
+    private String email;
+    @Column(nullable = true, length = 30)
+    private String company;
 
     @Override
-    public String toString() {
-        return firstName + " " + lastName;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Customer customer = (Customer) o;
+        return id != null && Objects.equals(id, customer.id);
     }
 
-    public String getFirstName() {
-        return firstName;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
 }

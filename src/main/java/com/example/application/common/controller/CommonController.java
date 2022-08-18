@@ -21,7 +21,7 @@ public class CommonController {
 
     /**
      * Builds a generic response
-     * @param message
+     * @param object
      * @param status
      * @return generic response
      */
